@@ -83,13 +83,27 @@ bool verify(char t[3][3], char p){
   return win;
 }
 
+void jogadaOponente(char t[3][3], char p){
+  int i, j;
+  bool checking = true;
+
+  for(i = 0; i < 3; i++){
+    for(j = 0; j < 3; j++){
+      if(t[i][j] == ' ' && checking){
+	t[i][j] = p;
+	checking = false;
+      }
+    }
+  }
+}
+
 int main(){
   system("clear");
 
   char tabuleiro[3][3];
   int i, j;
   int choi, choj;               //choice i, linha   |   choice j, coluna
-  char pecJog;                  //peca do jogador;
+  char pecJog, pecOpon;                  //peca do jogador;
   bool running = true;
 
   for(i = 0; i < 3; i++){
@@ -104,21 +118,31 @@ int main(){
     system("clear");
   }
 
+  pecOpon = (pecJog == 'X' ? 'O' : 'X');
+
   while(running){
     system("clear");
     showTab(tabuleiro);
 
-    while((choi < 1) || (choi > 3)){
-      printf("\n[linha]: ");
-      scanf("%d", &choi);
-    }
+    do{
+      while((choi < 1) || (choi > 3)){
+        printf("\n[linha]: ");
+        scanf("%d", &choi);
+      }
 
-    while((choj < 1) || (choj > 3)){
-      printf("\n[coluna]: ");
-      scanf("%d", &choj);
-    }
+      while((choj < 1) || (choj > 3)){
+        printf("\n[coluna]: ");
+        scanf("%d", &choj);
+      }
 
-    tabuleiro[choi - 1][choj - 1] = pecJog;
+      if(tabuleiro[choi - 1][choj - 1] != ' '){
+        printf("Campo ja preenchido!");
+	choi = 0;
+	choj = 0;
+      }
+    }while(tabuleiro[choi - 1][choj - 1] != ' ');
+
+    tabuleiro[choi - 1][choj - 1] = pecJog;   //jogadaJogador
 
     if(verify(tabuleiro, pecJog)){
       running = false;
@@ -127,6 +151,17 @@ int main(){
       printf("\n ----------");
       printf("\n| You win! |");
       printf("\n ----------\n");
+    }
+
+    jogadaOponente(tabuleiro, pecOpon);
+
+    if(verify(tabuleiro, pecOpon)){
+      running = false;
+      system("clear");
+
+      printf("\n -------");
+      printf("\n| lose! |");
+      printf("\n -------\n");
     }
 
     choi = 0;
