@@ -2,10 +2,6 @@
 
 void showTab(char tab[3][3]){
   int i, j;
-  static int count = 0;
-
-
-  printf("Rodada [%d]\n", (++count));
 
   for(i = 0; i < 3; i++){
 
@@ -79,18 +75,4 @@ bool verify(char t[3][3], char p){
   temp = 0;
 
   return win;
-}
-
-void jogadaOponente(char t[3][3], char p){
-  int i, j;
-  bool checking = true;
-
-  for(i = 0; i < 3; i++){
-    for(j = 0; j < 3; j++){
-      if(t[i][j] == ' ' && checking){
-	t[i][j] = p;
-	checking = false;
-      }
-    }
-  }
 }

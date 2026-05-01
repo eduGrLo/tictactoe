@@ -4,5 +4,3 @@
 void showTab(char tab[3][3]);
 
 bool verify(char t[3][3], char p);
-
-void jogadaOponente(char t[3][3], char p);
